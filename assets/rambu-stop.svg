@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" width="160" height="180">
+  <!-- Tiang -->
+  <rect x="72" y="140" width="16" height="36" rx="4" fill="#888"/>
+  <rect x="50" y="168" width="60" height="10" rx="5" fill="#666"/>
+
+  <!-- Segi delapan merah (octagon stop sign) -->
+  <polygon points="60,10 100,10 130,40 130,100 100,130 60,130 30,100 30,40"
+           fill="#CC0000" stroke="#8B0000" stroke-width="4"/>
+  <!-- Segi delapan putih dalam (border) -->
+  <polygon points="64,18 96,18 122,44 122,96 96,122 64,122 38,96 38,44"
+           fill="none" stroke="white" stroke-width="4"/>
+
+  <!-- Teks STOP -->
+  <text x="80" y="84" text-anchor="middle" dominant-baseline="middle"
+        font-family="Arial Black, sans-serif" font-size="30" font-weight="900"
+        fill="white" letter-spacing="2">STOP</text>
+</svg>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Rambu Jalan - TK Budi Utomo</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff6699 100%);
+            min-height: 100vh;
+            padding: 24px 40px;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 36px;
+            padding: 20px 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border: 6px solid #ff3366;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: contain;
+            border: 6px solid #00ccff;
+            background: white;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+
+        .title {
+            font-size: 3.2rem;
+            color: #ff3366;
+            text-shadow: 3px 3px 0 #ffcc00;
+            line-height: 1.15;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            color: #0099ff;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        /* ── TAB NAV ── */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            font-size: 1.9rem;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(to right, #00ccff, #00ff99);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            font-weight: bold;
+            min-width: 220px;
+            text-shadow: 1px 1px 0 #0066cc;
+            outline: none;
+        }
+
+        .tab-button:hover,
+        .tab-button:focus {
+            transform: scale(1.08);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+            background: linear-gradient(to right, #ff3366, #ffcc00);
+            outline: 6px solid white;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(to right, #ff3366, #ff9900);
+            box-shadow: inset 0 0 16px rgba(0,0,0,0.4);
+            outline: 6px solid white;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .content {
+            background: rgba(255,255,255,0.97);
+            border-radius: 40px;
+            padding: 40px 48px;
+            margin: 0 auto;
+            max-width: 1600px;
+            box-shadow: 0 12px 40px rgba(255,50,100,0.3);
+            border: 8px solid #00ccff;
+            min-height: 520px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── BERANDA ── */
+        .home-page { text-align: center; padding: 20px 0; }
+
+        .home-page h2 {
+            font-size: 3.2rem;
+            color: #ff3366;
+            margin-bottom: 20px;
+        }
+
+        .home-page p {
+            font-size: 2.2rem;
+            line-height: 1.6;
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+
+        .big-emoji {
+            font-size: 7rem;
+            margin: 24px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-24px); }
+        }
+
+        /* ── FLIP CARD ── */
+        .belajar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 28px;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 320px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .flip-card:focus .flip-card-inner,
+        .flip-card:hover .flip-card-inner {
+            box-shadow: 0 0 0 8px #ff3366;
+            border-radius: 28px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+            border-radius: 28px;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .flip-card-front {
+            background: white;
+            border: 8px solid #00ccff;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #ffcc00, #ff6699);
+            border: 8px solid #ff3366;
+            color: white;
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+
+        .kategori-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* ── KUIS ── */
+        .quiz-container { text-align: center; padding: 10px 0; }
+
+        .quiz-question {
+            font-size: 3rem;
+            color: #ff3366;
+            margin-bottom: 16px;
+        }
+
+        .quiz-emoji {
+            font-size: 8rem;
+            margin: 16px 0;
+            animation: bounce 2s infinite;
+            display: block;
+        }
+
+        .progress-bar-wrap {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 14px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .progress-bar-fill {
+            background: #4caf50;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.4s;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 960px;
+            margin: 24px auto;
+        }
+
+        .quiz-option {
+            font-size: 2.2rem;
+            padding: 22px 28px;
+            background: linear-gradient(to right, #00ccff, #00ff99);
+            color: white;
+            border: none;
+            border-radius: 32px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #0066cc;
+            outline: none;
+        }
+
+        .quiz-option:hover,
+        .quiz-option:focus {
+            transform: scale(1.06);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #ff9900, #ffcc00);
+            outline: 6px solid #ff3366;
+        }
+
+        .quiz-option.correct {
+            background: linear-gradient(to right, #00cc66, #00ff99) !important;
+            box-shadow: 0 0 24px #00ff99 !important;
+            outline: none;
+        }
+
+        .quiz-option.wrong {
+            background: linear-gradient(to right, #ff3366, #ff6600) !important;
+            box-shadow: 0 0 24px #ff3366 !important;
+            animation: shake 0.4s;
+            outline: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%, 75%  { transform: translateX(-10px); }
+            50%       { transform: translateX(10px); }
+        }
+
+        .quiz-feedback {
+            font-size: 2.4rem;
+            margin-top: 20px;
+            padding: 16px 28px;
+            border-radius: 24px;
+            display: inline-block;
+        }
+
+        .quiz-score-display {
+            font-size: 2.2rem;
+            color: #ff9900;
+            margin-top: 16px;
+            font-weight: bold;
+        }
+
+        /* ── PASANGKAN ── */
+        .matching-instructions {
+            font-size: 2rem;
+            color: #0066cc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .matching-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .matching-column-label {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            color: #ff3366;
+            margin-bottom: 12px;
+        }
+
+        .matching-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .match-card {
+            padding: 18px 16px;
+            border-radius: 20px;
+            border: 6px solid #00ccff;
+            background: white;
+            cursor: pointer;
+            font-size: 2rem;
+            text-align: center;
+            transition: all 0.2s;
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            font-weight: bold;
+        }
+
+        .match-card:hover,
+        .match-card:focus {
+            border-color: #ff3366;
+            background: #fff3f6;
+            transform: scale(1.03);
+            outline: 6px solid #ff9900;
+        }
+
+        .match-card.selected {
+            border-color: #0288d1;
+            background: #e3f2fd;
+            box-shadow: 0 0 0 6px #0288d1;
+        }
+
+        .match-card.matched {
+            border-color: #4caf50;
+            background: #e8f5e9;
+            cursor: default;
+            opacity: 0.85;
+        }
+
+        .match-card.matched:hover,
+        .match-card.matched:focus {
+            transform: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .match-card.wrong {
+            border-color: #e53935;
+            background: #ffebee;
+            animation: shake 0.4s;
+        }
+
+        /* ── TROFI ── */
+        .trofi-container { text-align: center; padding: 20px 0; }
+
+        .trofi-bintang {
+            font-size: 5rem;
+            color: #ffcc00;
+            margin: 16px 0;
+            font-weight: bold;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 32px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: white;
+            margin: 12px 0;
+        }
+
+        .level-pemula    { background: #78909c; }
+        .level-lanjutan  { background: #1e88e5; }
+        .level-ahli      { background: #fdd835; color: #333; }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            font-size: 1.4rem;
+            color: white;
+            margin-top: 28px;
+            padding: 16px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 24px;
+        }
+
+        /* ── TV FOCUS RING — semua elemen interaktif ── */
+        button:focus, a:focus, [tabindex]:focus {
+            outline: 6px solid white;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <img src="logo.png" alt="Logo Budi Utomo School" class="logo">
+        <div>
+            <h1 class="title">BELAJAR RAMBU JALAN</h1>
+            <p class="subtitle">Untuk Anak TK Usia 4–6 Tahun</p>
+        </div>
+    </header>
+
+    <nav class="tabs" id="tab-nav">
+        <button class="tab-button active" data-page="home"      tabindex="0">🏠 BERANDA</button>
+        <button class="tab-button"        data-page="belajar"   tabindex="0">📚 BELAJAR</button>
+        <button class="tab-button"        data-page="kuis"      tabindex="0">❓ KUIS</button>
+        <button class="tab-button"        data-page="pasangkan" tabindex="0">🧩 PASANGKAN</button>
+        <button class="tab-button"        data-page="trofi"     tabindex="0">🏆 TROFI</button>
+    </nav>
+
+    <main class="content">
+
+        <!-- BERANDA -->
+        <section id="home" class="page active">
+            <div class="home-page">
+                <h2>Selamat Datang! 👋</h2>
+                <p>Halo adik-adik TK!<br>Yuk kita belajar rambu-rambu jalan!</p>
+                <div class="big-emoji" style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;animation:none">
+                    <img src="assets/lampu-merah.svg"             alt="Lampu Merah"      style="height:90px;object-fit:contain">
+                    <img src="assets/lampu-kuning.svg"            alt="Lampu Kuning"     style="height:90px;object-fit:contain">
+                    <img src="assets/lampu-hijau.svg"             alt="Lampu Hijau"      style="height:90px;object-fit:contain">
+                    <img src="assets/zebra cross.png"             alt="Zebra Cross"      style="height:90px;object-fit:contain">
+                    <img src="assets/rambu hati hati.png"         alt="Hati-Hati"        style="height:90px;object-fit:contain">
+                </div>
+                <p>Pilih menu di atas untuk mulai belajar, main kuis, atau pasangkan kartu.</p>
+                <p style="margin-top:12px">Setiap jawaban benar = 1 bintang ⭐</p>
+            </div>
+        </section>
+
+        <!-- BELAJAR -->
+        <section id="belajar" class="page">
+            <h2 style="font-size:2.8rem;color:#ff3366;text-align:center">📚 MODE BELAJAR</h2>
+            <p style="font-size:1.8rem;text-align:center;color:#0099ff;margin-top:8px">Klik kartu untuk melihat penjelasan!</p>
+            <div id="belajar-container" class="belajar-grid"></div>
+        </section>
+
+        <!-- KUIS -->
+        <section id="kuis" class="page">
+            <div id="kuis-container"></div>
+        </section>
+
+        <!-- PASANGKAN -->
+        <section id="pasangkan" class="page">
+            <h2 style="font-size:2.8rem;color:#ff3366;text-align:center">🧩 MODE PASANGKAN</h2>
+            <p class="matching-instructions">Klik emoji di kiri, lalu klik namanya di kanan!</p>
+            <div id="pasangkan-container"></div>
+            <div id="pasang-hasil" style="text-align:center;font-size:2.4rem;margin-top:20px;font-weight:bold;color:#00cc66"></div>
+        </section>
+
+        <!-- TROFI -->
+        <section id="trofi" class="page">
+            <h2 style="font-size:2.8rem;color:#ff3366;text-align:center">🏆 TROFI &amp; BINTANG</h2>
+            <div id="trofi-container" class="trofi-container"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>Dibuat dengan ❤️ untuk TK Budi Utomo &nbsp;|&nbsp; © 2026</p>
+    </footer>
+
+    <script>
+        // ── DATA ──
+        const rambuTK = [
+            { id:1, img:'assets/lampu-merah.svg',             nama:'Lampu Merah',         kategori:'lalulintas', penjelasan:'Lampu MERAH artinya BERHENTI! Tunggu sampai hijau.' },
+            { id:2, img:'assets/lampu-kuning.svg',            nama:'Lampu Kuning',        kategori:'lalulintas', penjelasan:'Lampu KUNING artinya HATI-HATI! Bersiap berhenti.' },
+            { id:3, img:'assets/lampu-hijau.svg',             nama:'Lampu Hijau',         kategori:'lalulintas', penjelasan:'Lampu HIJAU artinya JALAN! Kendaraan boleh melaju.' },
+            { id:4, img:'assets/dilarang parkir.jfif',        nama:'Dilarang Parkir',     kategori:'larangan',   penjelasan:'Tidak boleh memarkir kendaraan di tempat ini.' },
+            { id:5, img:'assets/Dilarang Stop.png',           nama:'Dilarang Berhenti',   kategori:'larangan',   penjelasan:'Kendaraan tidak boleh berhenti walau sebentar.' },
+            { id:6, img:'assets/dilarang belok kanan.png',   nama:'Dilarang Belok Kanan', kategori:'larangan',   penjelasan:'Kendaraan tidak boleh belok ke kanan di sini.' },
+            { id:7, img:'assets/dilarang belok kiri.png',    nama:'Dilarang Belok Kiri',  kategori:'larangan',   penjelasan:'Kendaraan tidak boleh belok ke kiri di sini.' },
+            { id:8, img:'assets/zebra cross.png',             nama:'Zebra Cross',         kategori:'informasi',  penjelasan:'Tempat menyeberang jalan yang aman untuk pejalan kaki.' },
+            { id:9, img:'assets/rambu hati hati.png',         nama:'Hati-Hati',           kategori:'peringatan', penjelasan:'Ada bahaya di depan. Kurangi kecepatan dan waspada!' }
+        ];
+
+        const katColor = { larangan:'#ff3366', lalulintas:'#ff9900', informasi:'#00ccff', peringatan:'#ff6600' };
+        const katLabel = { larangan:'Larangan', lalulintas:'Lalu Lintas', informasi:'Informasi', peringatan:'Peringatan' };
+
+        // ── SCORE ──
+        let score = parseInt(localStorage.getItem('budiUtomo_tk_score') || '0');
+
+        function saveScore() { localStorage.setItem('budiUtomo_tk_score', score); }
+        function addScore(n) { score += n; saveScore(); }
+
+        // ── AUDIO ──
+        function playBeep(benar) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const o = ctx.createOscillator();
+                const g = ctx.createGain();
+                o.connect(g); g.connect(ctx.destination);
+                o.frequency.value = benar ? 880 : 220;
+                o.type = benar ? 'sine' : 'sawtooth';
+                g.gain.setValueAtTime(0.25, ctx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                o.start(); o.stop(ctx.currentTime + 0.4);
+            } catch(e) {}
+        }
+
+        function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+        // ── TAB NAVIGATION ──
+        function switchTab(pageId) {
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.tab-button[data-page="${pageId}"]`).classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if (pageId === 'belajar')    renderBelajar();
+            if (pageId === 'kuis')       startKuis();
+            if (pageId === 'pasangkan')  startPasangkan();
+            if (pageId === 'trofi')      renderTrofi();
+        }
+
+        // ── MODE BELAJAR ──
+        function renderBelajar() {
+            const container = document.getElementById('belajar-container');
+            container.innerHTML = '';
+            rambuTK.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'flip-card';
+                card.tabIndex = 0;
+                card.innerHTML = `
+                    <span class="kategori-badge" style="background:${katColor[r.kategori]}">${katLabel[r.kategori]}</span>
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="border-color:${katColor[r.kategori]}">
+                            <img src="${r.img}" alt="${r.nama}" style="height:110px;object-fit:contain;margin-bottom:16px">
+                            <div style="font-size:2.4rem;color:${katColor[r.kategori]};font-weight:bold;text-align:center">${r.nama}</div>
+                            <div style="font-size:1.5rem;color:#888;margin-top:10px">Klik untuk penjelasan</div>
+                        </div>
+                        <div class="flip-card-back" style="border-color:${katColor[r.kategori]}">
+                            <img src="${r.img}" alt="${r.nama}" style="height:80px;object-fit:contain;margin-bottom:12px">
+                            <div style="font-size:2rem;font-weight:bold;margin-bottom:12px">${r.nama}</div>
+                            <div style="font-size:1.8rem;line-height:1.6">${r.penjelasan}</div>
+                        </div>
+                    </div>`;
+                const toggle = () => { card.classList.toggle('flipped'); playBeep(true); };
+                card.addEventListener('click', toggle);
+                card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+                container.appendChild(card);
+            });
+        }
+
+        // ── MODE KUIS ──
+        let kuisSoal = [], kuisIdx = 0, kuisSkor = 0;
+
+        function startKuis() {
+            kuisSoal = shuffle(rambuTK);
+            kuisIdx = 0; kuisSkor = 0;
+            renderKuis();
+        }
+
+        function renderKuis() {
+            const box = document.getElementById('kuis-container');
+            if (kuisIdx >= kuisSoal.length) {
+                addScore(0); // score sudah ditambah per jawaban
+                box.innerHTML = `
+                    <div class="quiz-container">
+                        <div style="font-size:6rem">🎉</div>
+                        <div class="quiz-question">Kuis Selesai!</div>
+                        <div class="quiz-feedback" style="background:#ffcc00;color:#333;font-size:2.4rem">
+                            Kamu menjawab ${kuisSkor} dari ${kuisSoal.length} dengan benar!
+                        </div>
+                        <div style="margin-top:28px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+                            <button class="quiz-option" style="min-width:240px" onclick="startKuis()">🔄 Main Lagi</button>
+                            <button class="quiz-option" style="min-width:240px;background:linear-gradient(to right,#ff3366,#ff9900)" onclick="switchTab('trofi')">🏆 Lihat Trofi</button>
+                        </div>
+                    </div>`;
+                return;
+            }
+            const soal = kuisSoal[kuisIdx];
+            const salah = shuffle(rambuTK.filter(r => r.id !== soal.id)).slice(0, 2);
+            const pilihan = shuffle([soal, ...salah]);
+            const persen = Math.round((kuisIdx / kuisSoal.length) * 100);
+            box.innerHTML = `
+                <div class="quiz-container">
+                    <div style="font-size:1.6rem;color:#888;margin-bottom:8px">Soal ${kuisIdx+1} dari ${kuisSoal.length}</div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${persen}%"></div></div>
+                    <div class="quiz-question">Apa nama rambu ini?</div>
+                    <img src="${soal.img}" alt="${soal.nama}" class="quiz-emoji" style="height:140px;object-fit:contain;display:block;margin:16px auto">
+                    <div class="quiz-options" id="pilihan-grid"></div>
+                    <div id="quiz-feedback" class="quiz-feedback" style="display:none"></div>
+                    <div class="quiz-score-display">⭐ Skor: ${kuisSkor}</div>
+                </div>`;
+            pilihan.forEach(p => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.textContent = p.nama;
+                btn.tabIndex = 0;
+                btn.onclick = () => jawabKuis(btn, p.nama, soal.nama);
+                btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+                document.getElementById('pilihan-grid').appendChild(btn);
+            });
+        }
+
+        function jawabKuis(btn, dipilih, benar) {
+            document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+            const fb = document.getElementById('quiz-feedback');
+            if (dipilih === benar) {
+                btn.classList.add('correct');
+                kuisSkor++;
+                addScore(1);
+                fb.innerHTML = '🌟 Hebat! Benar!';
+                fb.style.cssText = 'display:inline-block;background:#00cc66;color:white';
+                playBeep(true);
+            } else {
+                btn.classList.add('wrong');
+                document.querySelectorAll('.quiz-option').forEach(b => { if (b.textContent === benar) b.classList.add('correct'); });
+                fb.innerHTML = '💪 Hampir! Coba lagi!';
+                fb.style.cssText = 'display:inline-block;background:#ff3366;color:white';
+                playBeep(false);
+            }
+            setTimeout(() => { kuisIdx++; renderKuis(); }, 1800);
+        }
+
+        // ── MODE PASANGKAN ──
+        let pasangSoal = [], pasangPilihan = null, pasangCocok = 0;
+
+        function startPasangkan() {
+            pasangSoal = shuffle(rambuTK);
+            pasangPilihan = null; pasangCocok = 0;
+            document.getElementById('pasang-hasil').innerHTML = '';
+            renderPasangkan();
+        }
+
+        function renderPasangkan() {
+            const wrap = document.getElementById('pasangkan-container');
+            const kiri  = shuffle(pasangSoal);
+            const kanan = shuffle(pasangSoal);
+            let lHTML = '', rHTML = '';
+            kiri.forEach(r  => { lHTML += `<div class="match-card" data-id="${r.id}" data-tipe="kiri"  tabindex="0"><img src="${r.img}" alt="${r.nama}" style="height:60px;object-fit:contain"></div>`; });
+            kanan.forEach(r => { rHTML += `<div class="match-card" data-id="${r.id}" data-tipe="kanan" tabindex="0">${r.nama}</div>`; });
+            wrap.innerHTML = `
+                <div class="matching-columns">
+                    <div>
+                        <div class="matching-column-label">🖼️ Gambar Rambu</div>
+                        <div class="matching-col" id="kolom-kiri">${lHTML}</div>
+                    </div>
+                    <div>
+                        <div class="matching-column-label">📝 Nama Rambu</div>
+                        <div class="matching-col" id="kolom-kanan">${rHTML}</div>
+                    </div>
+                </div>`;
+            wrap.querySelectorAll('.match-card').forEach(card => {
+                card.addEventListener('click', () => klikPasang(card));
+                card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); klikPasang(card); } });
+            });
+        }
+
+        function klikPasang(el) {
+            if (el.classList.contains('matched')) return;
+            if (!pasangPilihan) {
+                pasangPilihan = el; el.classList.add('selected'); return;
+            }
+            if (pasangPilihan === el) {
+                el.classList.remove('selected'); pasangPilihan = null; return;
+            }
+            if (pasangPilihan.dataset.tipe === el.dataset.tipe) {
+                pasangPilihan.classList.remove('selected');
+                pasangPilihan = el; el.classList.add('selected'); return;
+            }
+            if (pasangPilihan.dataset.id === el.dataset.id) {
+                [pasangPilihan, el].forEach(c => { c.classList.remove('selected'); c.classList.add('matched'); c.tabIndex = -1; });
+                pasangCocok++; addScore(1); playBeep(true);
+                if (pasangCocok === rambuTK.length) {
+                    document.getElementById('pasang-hasil').innerHTML =
+                        `🎉 Semua cocok! <button class="quiz-option" style="font-size:1.8rem;padding:14px 28px;margin-left:16px" onclick="startPasangkan()">Main Lagi</button>`;
+                }
+            } else {
+                [pasangPilihan, el].forEach(c => c.classList.add('wrong'));
+                playBeep(false);
+                const a = pasangPilihan, b = el;
+                setTimeout(() => { [a, b].forEach(c => c.classList.remove('wrong', 'selected')); }, 700);
+            }
+            pasangPilihan = null;
+        }
+
+        // ── TROFI ──
+        function renderTrofi() {
+            let level, cls, msg;
+            if      (score >= 10) { level = '🥇 Ahli Rambu!';  cls = 'level-ahli';    msg = 'Luar biasa! Kamu sudah hafal semua rambu!'; }
+            else if (score >= 5)  { level = '🌟 Lanjutan';      cls = 'level-lanjutan'; msg = 'Bagus! Terus semangat belajar!'; }
+            else                  { level = '🌱 Pemula';        cls = 'level-pemula';   msg = 'Yuk mulai belajar rambu-rambu jalan!'; }
+            document.getElementById('trofi-container').innerHTML = `
+                <div style="font-size:5rem">🏆</div>
+                <div class="trofi-bintang">⭐ ${score} BINTANG</div>
+                <div class="level-badge ${cls}">${level}</div>
+                <div style="font-size:2rem;color:#555;margin:12px 0">${msg}</div>
+                <div style="background:#e0e0e0;border-radius:10px;height:16px;max-width:400px;margin:16px auto">
+                    <div style="background:#ffcc00;height:100%;border-radius:10px;width:${Math.min(score/15*100,100)}%;transition:width 0.5s"></div>
+                </div>
+                <div style="font-size:1.6rem;color:#888;margin-bottom:24px">${score} / 15 bintang untuk level Ahli</div>
+                <button tabindex="0" onclick="if(confirm('Reset semua bintang?')){score=0;saveScore();renderTrofi();}"
+                    style="padding:12px 28px;border-radius:20px;border:4px solid #ff3366;background:white;color:#ff3366;cursor:pointer;font-size:1.6rem;font-family:inherit">
+                    🗑️ Reset Bintang
+                </button>`;
+        }
+
+        // ── INIT ──
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.page));
+            btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchTab(btn.dataset.page); } });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // pastikan beranda aktif saat load
+            switchTab('home');
+        });
+    </script>
+</body>
+</html>

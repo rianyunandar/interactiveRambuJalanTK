@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" width="160" height="180">
+  <!-- Tiang -->
+  <rect x="72" y="140" width="16" height="36" rx="4" fill="#888"/>
+  <rect x="50" y="168" width="60" height="10" rx="5" fill="#666"/>
+
+  <!-- Papan persegi biru -->
+  <rect x="10" y="10" width="140" height="130" rx="16" fill="#005BB5" stroke="#003D7A" stroke-width="4"/>
+
+  <!-- Zebra stripes (putih) -->
+  <rect x="20" y="80" width="120" height="16" rx="2" fill="white"/>
+  <rect x="20" y="104" width="120" height="16" rx="2" fill="white"/>
+  <rect x="20" y="128" width="120" height="8" rx="2" fill="white" clip-path="url(#boxClip)"/>
+
+  <!-- Orang berjalan (pejalan kaki) - sederhana -->
+  <!-- Kepala -->
+  <circle cx="88" cy="34" r="11" fill="white"/>
+  <!-- Badan -->
+  <line x1="88" y1="45" x2="88" y2="72" stroke="white" stroke-width="7" stroke-linecap="round"/>
+  <!-- Tangan kiri naik -->
+  <line x1="88" y1="54" x2="68" y2="44" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <!-- Tangan kanan turun -->
+  <line x1="88" y1="54" x2="108" y2="62" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <!-- Kaki kiri -->
+  <line x1="88" y1="72" x2="72" y2="88" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <!-- Kaki kanan -->
+  <line x1="88" y1="72" x2="104" y2="88" stroke="white" stroke-width="6" stroke-linecap="round"/>
+
+  <defs>
+    <clipPath id="boxClip">
+      <rect x="10" y="10" width="140" height="130" rx="16"/>
+    </clipPath>
+  </defs>
+</svg>
